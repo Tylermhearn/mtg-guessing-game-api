@@ -1,9 +1,8 @@
 const express = require('express');
 const cors = require('cors')
-const dotenv = require('dotenv');
 const apiErrorHandler = require('./error/apiErrorHandler')
+const authenticateToken = require('./middleware/authenticateToken')
 
-dotenv.config();
 process.env.TOKEN_SECRET;
 
 const app = express()
@@ -14,6 +13,8 @@ app.use(express.json())
 
 const authRouter = require('./routes/auth')
 app.use('/auth', authRouter)
+
+app.use(authenticateToken);
 
 const userRouter = require('./routes/user')
 app.use('/user', userRouter)
